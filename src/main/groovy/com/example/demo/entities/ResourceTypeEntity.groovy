@@ -5,6 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.persistence.SequenceGenerator
 import javax.persistence.Table
 
@@ -20,4 +21,9 @@ class ResourceTypeEntity {
 
     @Column(name = "name")
     String name;
+
+    @OneToMany(mappedBy = "resourceType")
+    List<ResourceFieldEntity> fieldList;
+
+
 }
