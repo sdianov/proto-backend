@@ -1,0 +1,45 @@
+GET http://localhost:8080/api/rest/group
+
+###
+
+GET http://localhost:8080/api/rest/group?query=title%20%3D%3D%20%27dfdfs%27
+
+###
+
+GET http://localhost:8080/api/rest/group/grp002
+
+###
+
+POST http://localhost:8080/api/rest/group/
+Content-Type: application/json
+
+{
+  "id": "grp003",
+  "title": "dfdfs",
+  "description": "dfsfdm"
+}
+
+###
+
+PUT http://localhost:8080/api/rest/group/grp002
+Content-Type: application/json
+
+{
+  "id": "grp002",
+  "title": "dfsdsdfs",
+  "description": "dfsfdm"
+}
+
+###
+
+DELETE http://localhost:8080/api/rest/group/123
+
+###
+
+POST http://localhost:8080/api/batch/group/
+
+###
+
+GET http://localhost:8080/meta/types
+
+###
