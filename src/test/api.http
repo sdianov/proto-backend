@@ -43,3 +43,8 @@ POST http://localhost:8080/api/batch/group/
 GET http://localhost:8080/meta/types
 
 ###
+
+
+GET http://localhost:8080/api/rest/group/grp002/item/12345
+
+###

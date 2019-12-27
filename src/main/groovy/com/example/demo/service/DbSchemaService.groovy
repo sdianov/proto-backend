@@ -12,10 +12,10 @@ class DbSchemaService {
 
     boolean typeRegistered(String typeName) {
 
-        return resourceTypeRepository.getResourceTypeList().any { it.name == typeName };
+        return resourceTypeRepository.getResourceTypeListByParent(0L).any { it.name == typeName };
     }
 
     List<ResourceTypeEntity> getResourceTypeEntities() {
-        return resourceTypeRepository.resourceTypeList;
+        return resourceTypeRepository.getResourceTypeListByParent(0L);
     }
 }

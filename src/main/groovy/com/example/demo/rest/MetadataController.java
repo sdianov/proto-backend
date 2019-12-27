@@ -2,7 +2,6 @@ package com.example.demo.rest;
 
 import com.example.demo.entities.ResourceTypeEntity;
 import com.example.demo.service.DbSchemaService;
-import com.example.demo.service.ResourceTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

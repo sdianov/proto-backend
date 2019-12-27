@@ -22,6 +22,9 @@ class ResourceFieldEntity {
     @Column(name = "name")
     String name;
 
+    @Column(name = "data_type")
+    String dataType;
+
     @ManyToOne
     @JoinColumn(name = "resource_type_id")
     @JsonIgnore

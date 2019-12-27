@@ -3,6 +3,7 @@ package com.example.demo.rest;
 
 import com.example.demo.dto.BatchResponse;
 import com.example.demo.service.MyApiService;
+import com.example.demo.util.RequestData;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,20 +30,8 @@ public class MyApiController {
             RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
     }, produces = MediaType.APPLICATION_JSON_VALUE)
     Object handleApi(HttpServletRequest req) throws IOException {
-        String[] path = req.getServletPath().split("/");
 
-        if (path.length < 3 || !"rest".equals(path[2])) {
-            throw new IllegalArgumentException("wrong path");
-        }
-
-        String body = IOUtils.toString(req.getReader());
-
-        Object data = myApiService.processRequest(req.getMethod(),
-                Arrays.copyOfRange(path, 3, path.length),
-                body,
-                req.getParameter("query"));
-
-        return data;
+        return myApiService.processRequest(RequestData.fromHttp(req));
     }
 
     @RequestMapping(value = "/batch/**", method = {RequestMethod.POST},

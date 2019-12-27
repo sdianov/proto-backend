@@ -13,9 +13,12 @@ class ResourceTypeRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-    List<ResourceTypeEntity> getResourceTypeList() {
+    List<ResourceTypeEntity> getResourceTypeListByParent(Long parentId) {
         return entityManager
-                .createQuery("select e from ResourceTypeEntity e ", ResourceTypeEntity.class)
+                .createQuery("select e from ResourceTypeEntity e " +
+                        " where e.parent.id = :parentId and e.id <> 0 ",
+                        ResourceTypeEntity.class)
+                .setParameter("parentId", parentId)
                 .resultList
     }
 }
