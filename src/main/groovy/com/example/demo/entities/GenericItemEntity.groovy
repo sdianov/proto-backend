@@ -21,6 +21,9 @@ class GenericItemEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generic_items")
     Long id;
 
+    @Column(name= "parent_id")
+    Long parentId;
+
     @Column(name = "item_id")
     String itemId;
 

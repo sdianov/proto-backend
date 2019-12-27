@@ -18,23 +18,27 @@ class GenericItemRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-    List<GenericItemEntity> getItems(String itemType/* TODO: query */) {
+    List<GenericItemEntity> getItems(String itemType/* TODO: query */, Long parentId = 0) {
 
         def query = entityManager.createQuery("select e from GenericItemEntity e" +
-                " where e.itemType = :itemType ", GenericItemEntity);
+                " where e.itemType = :itemType " +
+                " and e.parentId = :parentId ", GenericItemEntity);
 
         query.setParameter("itemType", itemType);
+        query.setParameter("parentId", parentId);
         return query.resultList;
     }
 
-    GenericItemEntity getItem(String itemType, String itemId) {
+    GenericItemEntity getItem(String itemType, String itemId, Long parentId = 0) {
 
         def query = entityManager.createQuery("select e from GenericItemEntity e" +
                 " where e.itemType = :itemType" +
-                " and e.itemId = :itemId ", GenericItemEntity);
+                " and e.itemId = :itemId " +
+                " and e.parentId = :parentId ", GenericItemEntity);
 
         query.setParameter("itemType", itemType);
         query.setParameter("itemId", itemId);
+        query.setParameter("parentId", parentId);
         return query.singleResult;
     }
 

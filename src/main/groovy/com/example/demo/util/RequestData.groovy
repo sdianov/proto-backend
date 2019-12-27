@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest
 class PathFragment {
     String resourceType; // not null
     String resourceId;
+
+    @Override
+    String toString() {
+        return "$resourceType:$resourceId";
+    }
 }
 
 @CompileStatic

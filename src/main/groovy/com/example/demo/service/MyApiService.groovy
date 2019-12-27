@@ -3,12 +3,13 @@ package com.example.demo.service
 import com.example.demo.entities.GenericItemEntity
 import com.example.demo.util.QueryExpression
 import com.example.demo.util.RequestData
-import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 @CompileStatic
@@ -20,32 +21,36 @@ class MyApiService {
     @Autowired
     DbSchemaService dbSchemaService;
 
-    private void checkTypeRegistered(String typeName) {
-        if (!dbSchemaService.typeRegistered(typeName)) {
-            throw new IllegalArgumentException("Resource not registered: $typeName");
+    private void checkTypeRegistered(List<String> typePath) {
+        if (!dbSchemaService.typeRegistered(typePath)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not registered: $typePath");
         }
     }
 
     Object processRequest(RequestData requestData) {
-        def fragment = requestData.pathFragments.get(0);
+        long parentId = 0;
+        for (def nextFragment : requestData.pathFragments.init()) {
+            def nextItem = genericItemRepository.getItem(nextFragment.resourceType, nextFragment.resourceId, parentId);
+            parentId = nextItem.id;
+        }
+
+        def fragment = requestData.pathFragments.last();
+        def typePath = requestData.pathFragments.collect { it.resourceType };
+        checkTypeRegistered(typePath);
 
         if ("GET".equals(requestData.method)) {
             if (fragment.resourceId == null) {
 
                 def expression = new QueryExpression(requestData.query);
 
-                checkTypeRegistered(fragment.resourceType);
-
-                def items = genericItemRepository.getItems(fragment.resourceType);
+                def items = genericItemRepository.getItems(fragment.resourceType, parentId);
                 def parser = new JsonSlurper();
                 return items.collect { it ->
                     parser.parseText(it.jsonData)
                 }.findAll { expression.matches(it) };
 
             } else {
-                checkTypeRegistered(fragment.resourceType);
-
-                def item = genericItemRepository.getItem(fragment.resourceType, fragment.resourceId);
+                def item = genericItemRepository.getItem(fragment.resourceType, fragment.resourceId, parentId);
                 return item.jsonData;
             }
         }
@@ -60,9 +65,10 @@ class MyApiService {
                 throw new IllegalArgumentException("no Id");
             }
 
-            checkTypeRegistered(fragment.resourceType);
-
-            def item = new GenericItemEntity(itemType: fragment.resourceType, itemId: id, jsonData: JsonOutput.toJson(json));
+            def item = new GenericItemEntity(itemType: fragment.resourceType,
+                    itemId: id,
+                    jsonData: JsonOutput.toJson(json),
+                    parentId: parentId);
             return genericItemRepository.putItem(item);
         }
 
@@ -70,7 +76,6 @@ class MyApiService {
             if (fragment.resourceId == null) {
                 throw new IllegalArgumentException("invalid parameters");
             }
-            checkTypeRegistered(fragment.resourceType);
 
             def item = genericItemRepository.getItem(fragment.resourceType, fragment.resourceId);
             genericItemRepository.deleteItem(item);
@@ -80,7 +85,6 @@ class MyApiService {
             if (fragment.resourceId == null) {
                 throw new IllegalArgumentException("invalid parameters");
             }
-            checkTypeRegistered(fragment.resourceType);
 
             def item = genericItemRepository.getItem(fragment.resourceType, fragment.resourceId);
 

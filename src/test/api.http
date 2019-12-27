@@ -44,7 +44,19 @@ GET http://localhost:8080/meta/types
 
 ###
 
+GET http://localhost:8080/api/rest/group/grp002/item
 
-GET http://localhost:8080/api/rest/group/grp002/item/12345
+###
+
+GET http://localhost:8080/api/rest/group/grp002/item/item1
+
+###
+
+POST http://localhost:8080/api/rest/group/grp002/item
+Content-Type: application/json
+
+{
+  "id": "item2"
+}
 
 ###

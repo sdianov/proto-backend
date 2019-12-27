@@ -18,6 +18,7 @@ class QueryExpression {
         def closure = new GroovyShell(binding).evaluate(code) as Closure;
 
         closure.delegate = object;
-        def res = closure();
+        boolean res = closure();
+        return res;
     }
 }
