@@ -1,6 +1,7 @@
 package com.example.demo.entities
 
 import groovy.transform.CompileStatic
+import org.springframework.lang.NonNull
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.SequenceGenerator
 import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 @CompileStatic
 @Entity
@@ -25,10 +27,12 @@ class GenericItemEntity {
     Long parentId;
 
     @Column(name = "item_id")
+    @NotNull
     String itemId;
 
-    @Column(name = "item_type")
-    String itemType;
+    @Column(name = "resource_type_id")
+    @NonNull
+    Long resourceTypeId;
 
     @Column(name = "json_data")
     String jsonData;

@@ -21,4 +21,14 @@ class ResourceTypeRepository {
                 .setParameter("parentId", parentId)
                 .resultList
     }
+
+    ResourceTypeEntity getByParentAndName(Long parentId, String name) {
+        return entityManager
+                .createQuery("select e from ResourceTypeEntity e " +
+                        " where e.parent.id = :parentId and e.name = :name ",
+                        ResourceTypeEntity.class)
+                .setParameter("parentId", parentId)
+                .setParameter("name", name)
+                .singleResult;
+    }
 }

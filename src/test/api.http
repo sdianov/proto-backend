@@ -14,9 +14,9 @@ POST http://localhost:8080/api/rest/group/
 Content-Type: application/json
 
 {
-  "id": "grp003",
-  "title": "dfdfs",
-  "description": "dfsfdm"
+  "id": "grp004",
+  "title": "4",
+  "description": "4"
 }
 
 ###
@@ -56,7 +56,7 @@ POST http://localhost:8080/api/rest/group/grp002/item
 Content-Type: application/json
 
 {
-  "id": "item2"
+  "id": "item3"
 }
 
 ###

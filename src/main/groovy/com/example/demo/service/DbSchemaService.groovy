@@ -1,5 +1,6 @@
 package com.example.demo.service
 
+import com.example.demo.entities.ResourceFieldEntity
 import com.example.demo.entities.ResourceTypeEntity
 import groovy.transform.CompileStatic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,11 @@ class DbSchemaService {
         return true;
     }
 
-    List<ResourceTypeEntity> getResourceTypeEntities() {
+    List<ResourceTypeEntity> getRootResourceTypeEntities() {
         return resourceTypeRepository.getResourceTypeListByParent(0L);
+    }
+
+    def List<ResourceFieldEntity> getTypeFields(Long parentId, String typeName) {
+        return resourceTypeRepository.getByParentAndName(parentId, typeName).fieldList;
     }
 }

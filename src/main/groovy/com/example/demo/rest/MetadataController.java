@@ -25,7 +25,7 @@ public class MetadataController {
             RequestMethod.GET
     }, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ResourceTypeEntity> getResourceTypeEntities() {
-        return schemaService.getResourceTypeEntities();
+        return schemaService.getRootResourceTypeEntities();
     }
 
 

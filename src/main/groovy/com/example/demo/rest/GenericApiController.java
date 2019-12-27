@@ -2,7 +2,7 @@ package com.example.demo.rest;
 
 
 import com.example.demo.dto.BatchResponse;
-import com.example.demo.service.MyApiService;
+import com.example.demo.service.GenericApiService;
 import com.example.demo.util.RequestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(path = "/api")
-public class MyApiController {
+public class GenericApiController {
 
-    private final MyApiService myApiService;
+    private final GenericApiService genericApiService;
 
     @Autowired
-    public MyApiController(MyApiService myApiService) {
-        this.myApiService = myApiService;
+    public GenericApiController(GenericApiService genericApiService) {
+        this.genericApiService = genericApiService;
     }
 
     @RequestMapping(value = "/rest/**", method = {
@@ -28,7 +28,7 @@ public class MyApiController {
     }, produces = MediaType.APPLICATION_JSON_VALUE)
     Object handleApi(HttpServletRequest req) {
 
-        return myApiService.processRequest(RequestData.fromHttp(req));
+        return genericApiService.processRequest(RequestData.fromHttp(req));
     }
 
     @RequestMapping(value = "/batch/**", method = {RequestMethod.POST},
