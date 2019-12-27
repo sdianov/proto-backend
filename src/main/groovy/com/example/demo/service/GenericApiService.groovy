@@ -21,14 +21,13 @@ class GenericApiService {
     @Autowired
     ResourceTypeRepository resourceTypeRepository;
 
-    @Autowired
-    DbSchemaService dbSchemaService;
 
     private void checkFields(Long parentTypeId, String typeName, Map object) {
 
         def keys = new ArrayList<>(object.keySet());
         keys.remove("id");
-        def fields = dbSchemaService.getTypeFields(parentTypeId, typeName).collect { it.name };
+        def fields = resourceTypeRepository.getByParentAndName(parentTypeId, typeName)
+                .fieldList.collect { it.name };
 
         if (!keys.every { fields.contains(it) }) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unknown fields")
