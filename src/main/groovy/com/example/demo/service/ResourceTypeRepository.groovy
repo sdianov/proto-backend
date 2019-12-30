@@ -31,4 +31,9 @@ class ResourceTypeRepository {
                 .setParameter("name", name)
                 .singleResult;
     }
+
+    ResourceTypeEntity putResourceType(ResourceTypeEntity entity) {
+        entityManager.persist(entity);
+        return entity;
+    }
 }

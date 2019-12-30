@@ -61,6 +61,10 @@ class GenericApiService {
 
             } else {
                 def item = genericItemRepository.getItem(fragmentType.id, fragment.resourceId, parentId);
+
+                if (requestData.nestedLevels > 0) {
+                    // TODO: load nested items
+                }
                 return item.jsonData;
             }
         }

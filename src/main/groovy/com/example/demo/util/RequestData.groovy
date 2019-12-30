@@ -28,6 +28,8 @@ class RequestData {
     String body;
     String query;
 
+    int nestedLevels;
+
     static List<PathFragment> pathToFragments(String[] path) {
         List<PathFragment> result = new ArrayList<>();
         for (int i = 0; i < path.length / 2; i++) {
@@ -49,9 +51,13 @@ class RequestData {
 
         String body = IOUtils.toString(req.getReader());
 
+        String nested = req.getParameter("nested");
+
         return new RequestData(method: req.getMethod(),
                 pathFragments: pathToFragments(path),
                 body: body,
-                query: req.getParameter("query"));
+                query: req.getParameter("query"),
+                nestedLevels: nested == null ? 0 : Integer.parseInt(nested)
+        );
     }
 }

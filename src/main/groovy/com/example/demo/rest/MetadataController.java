@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/meta")
+@RequestMapping(path = "/api/meta")
 public class MetadataController {
 
     private final ResourceTypeRepository resourceTypeRepository;
@@ -28,5 +28,13 @@ public class MetadataController {
        return resourceTypeRepository.getResourceTypeListByParent(0L);
     }
 
+    @RequestMapping(value = "/types", method = {
+            RequestMethod.POST
+    }, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResourceTypeEntity addTypeEntity(ResourceTypeEntity entity) {
+        // TODO: check existing
+        resourceTypeRepository.putResourceType(entity);
+        return entity;
+    }
 
 }
