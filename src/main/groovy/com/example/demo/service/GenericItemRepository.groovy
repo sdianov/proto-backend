@@ -3,7 +3,6 @@ package com.example.demo.service
 import com.example.demo.dto.BatchRequest
 import com.example.demo.entities.GenericItemEntity
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

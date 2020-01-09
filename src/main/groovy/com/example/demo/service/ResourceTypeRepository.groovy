@@ -1,7 +1,6 @@
 package com.example.demo.service
 
 import com.example.demo.entities.ResourceTypeEntity
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Repository
 import org.springframework.web.server.ResponseStatusException

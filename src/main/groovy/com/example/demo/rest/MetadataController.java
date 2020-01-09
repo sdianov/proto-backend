@@ -3,10 +3,10 @@ package com.example.demo.rest;
 import com.example.demo.entities.ResourceTypeEntity;
 import com.example.demo.service.ResourceFieldRepository;
 import com.example.demo.service.ResourceTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @RestController
@@ -16,7 +16,7 @@ public class MetadataController {
     private final ResourceTypeRepository resourceTypeRepository;
     private final ResourceFieldRepository resourceFieldRepository;
 
-    @Autowired
+    @Inject
     public MetadataController(ResourceTypeRepository resourceTypeRepository,
                               ResourceFieldRepository resourceFieldRepository) {
 

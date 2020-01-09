@@ -6,19 +6,20 @@ import com.example.demo.util.RequestData
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+
+import javax.inject.Inject
 
 @Service
 @CompileStatic
 class GenericApiService {
 
-    @Autowired
+    @Inject
     GenericItemRepository genericItemRepository;
 
-    @Autowired
+    @Inject
     ResourceTypeRepository resourceTypeRepository;
 
 
