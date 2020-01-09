@@ -37,5 +37,12 @@ class ResourceTypeEntity {
     @OneToMany(mappedBy = "resourceType")
     List<ResourceFieldEntity> fieldList;
 
+    ResourceTypeEntity() {
+
+    }
+
+    ResourceTypeEntity(long id) {
+        this.id = id;
+    }
 
 }

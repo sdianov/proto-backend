@@ -36,14 +36,6 @@ DELETE http://localhost:8080/api/rest/group/123
 
 ###
 
-POST http://localhost:8080/api/batch/group/
-
-###
-
-GET http://localhost:8080/api/meta/types
-
-###
-
 GET http://localhost:8080/api/rest/group/grp002/item
 
 ###

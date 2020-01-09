@@ -1,0 +1,33 @@
+GET http://localhost:8080/api/meta/types
+
+###
+
+POST http://localhost:8080/api/meta/types
+Content-Type: application/json
+
+{
+  "name": "profile",
+  "fieldList": []
+}
+
+###
+
+PUT http://localhost:8080/api/meta/types/202
+Content-Type: application/json
+
+{
+  "id": 202,
+  "name": "profile",
+  "fieldList": [
+    {
+      "name": "firstName",
+      "dataType": "S"
+    },
+    {
+      "name": "lastName",
+      "dataType": "S"
+    }
+  ]
+}
+
+###
