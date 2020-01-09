@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -31,10 +32,10 @@ class ResourceTypeEntity {
     @JoinColumn(name = "parent_id")
     ResourceTypeEntity parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     List<ResourceTypeEntity> children;
 
-    @OneToMany(mappedBy = "resourceType")
+    @OneToMany(mappedBy = "resourceType", fetch = FetchType.EAGER)
     List<ResourceFieldEntity> fieldList;
 
     ResourceTypeEntity() {

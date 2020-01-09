@@ -6,7 +6,7 @@ POST http://localhost:8080/api/meta/types
 Content-Type: application/json
 
 {
-  "name": "profile",
+  "name": "temwpwer",
   "fieldList": []
 }
 
