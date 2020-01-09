@@ -1,6 +1,7 @@
 package com.example.demo.rest;
 
 import com.example.demo.entities.ResourceTypeEntity;
+import com.example.demo.service.ResourceFieldRepository;
 import com.example.demo.service.ResourceTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,10 +14,14 @@ import java.util.List;
 public class MetadataController {
 
     private final ResourceTypeRepository resourceTypeRepository;
+    private final ResourceFieldRepository resourceFieldRepository;
 
     @Autowired
-    public MetadataController(ResourceTypeRepository resourceTypeRepository) {
+    public MetadataController(ResourceTypeRepository resourceTypeRepository,
+                              ResourceFieldRepository resourceFieldRepository) {
+
         this.resourceTypeRepository = resourceTypeRepository;
+        this.resourceFieldRepository = resourceFieldRepository;
     }
 
     @RequestMapping(value = "/types", method = {
