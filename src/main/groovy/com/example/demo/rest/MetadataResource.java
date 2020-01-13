@@ -5,6 +5,7 @@ import com.example.demo.service.ResourceFieldRepository;
 import com.example.demo.service.ResourceTypeRepository;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -52,7 +53,7 @@ public class MetadataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public ResourceTypeEntity putTypeEntity(
-            @PathParam("typeId") long typeId,
+            @PathParam("typeId") @NotNull long typeId,
             ResourceTypeEntity entity) {
 
         // TODO: check existing

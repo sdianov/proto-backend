@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import com.example.demo.rest.BatchApiResource;
+import com.example.demo.rest.GenericApiResource;
 import com.example.demo.rest.MetadataResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-
         register(MetadataResource.class);
+        register(GenericApiResource.class);
+        register(BatchApiResource.class);
     }
 }

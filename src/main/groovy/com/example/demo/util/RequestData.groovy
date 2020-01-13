@@ -5,7 +5,9 @@ import groovy.transform.CompileStatic
 import org.apache.commons.io.IOUtils
 
 import javax.servlet.http.HttpServletRequest
-
+import javax.ws.rs.core.PathSegment
+import javax.ws.rs.core.UriInfo
+import java.util.stream.Collectors
 
 @Canonical
 class PathFragment {
@@ -25,7 +27,7 @@ class RequestData {
 
     String method;
     List<PathFragment> pathFragments;
-    String body;
+    Object body;
     String query;
 
     int nestedLevels;
@@ -41,23 +43,28 @@ class RequestData {
         return result;
     }
 
-    static RequestData fromHttp(HttpServletRequest req) {
-        String[] path = req.getServletPath().split("/");
+    private static List<PathFragment> segmentsToFragments(List<PathSegment> segments) {
+        List<PathFragment> result = new ArrayList<>();
 
-        if (path.length < PATH_PREFIX_SIZE) {
-            throw new IllegalArgumentException("wrong path");
+        for (int i = 0; i < segments.size() / 2; i++) {
+            result.add(new PathFragment(
+                    resourceType: segments.get(i * 2).path,
+                    resourceId: segments.size() <= i * 2 + 1 ? null : segments.get(i * 2 + 1).path
+            ));
         }
-        path = Arrays.copyOfRange(path, PATH_PREFIX_SIZE, path.length);
-
-        String body = IOUtils.toString(req.getReader());
-
-        String nested = req.getParameter("nested");
-
-        return new RequestData(method: req.getMethod(),
-                pathFragments: pathToFragments(path),
-                body: body,
-                query: req.getParameter("query"),
-                nestedLevels: nested == null ? 0 : Integer.parseInt(nested)
-        );
+        return result;
     }
+
+    static RequestData fromParams(String method, UriInfo uriInfo, String query, Object body) {
+        List<PathSegment> segments = uriInfo.getPathSegments().stream().skip(2).collect(Collectors.toList());
+        List<PathFragment> fragments = segmentsToFragments(segments);
+        RequestData req = new RequestData();
+        req.setBody(body);
+        req.setQuery(query);
+        req.setMethod(method);
+        req.setPathFragments(fragments);
+
+        return req;
+    }
+
 }

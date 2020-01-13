@@ -14,7 +14,7 @@ POST http://localhost:8080/api/rest/group/
 Content-Type: application/json
 
 {
-  "id": "grp004",
+  "id": "grp0090978",
   "title": "4",
   "description": "4"
 }
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/api/rest/group/123
+DELETE http://localhost:8080/api/rest/group/grp0090978
 
 ###
 

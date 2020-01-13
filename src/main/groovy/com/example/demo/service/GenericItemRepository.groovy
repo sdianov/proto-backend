@@ -10,7 +10,6 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Service
-@Transactional
 @CompileStatic
 class GenericItemRepository {
 

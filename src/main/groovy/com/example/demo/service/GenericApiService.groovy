@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 import javax.inject.Inject
+import javax.transaction.Transactional
 
 @Service
 @CompileStatic
+@Transactional
 class GenericApiService {
 
     @Inject
@@ -71,10 +73,10 @@ class GenericApiService {
         }
 
         if ("POST".equals(requestData.method)) {
-            if (fragment.resourceId != null) {
+            if (fragment.resourceId != null && !fragment.resourceId.isEmpty()) {
                 throw new IllegalArgumentException("invalid parameters");
             }
-            def json = new JsonSlurper().parseText(requestData.body) as Map;
+            def json = requestData.body as Map;
             def id = json.get('id') as String;
 
             if (id == null) {
@@ -86,7 +88,8 @@ class GenericApiService {
                     itemId: id,
                     jsonData: JsonOutput.toJson(json),
                     parentId: parentId);
-            return genericItemRepository.putItem(item);
+            item = genericItemRepository.putItem(item);
+            return item.jsonData;
         }
 
         if ("DELETE".equals(requestData.method)) {
@@ -102,7 +105,8 @@ class GenericApiService {
             if (fragment.resourceId == null) {
                 throw new IllegalArgumentException("invalid parameters");
             }
-            def json = new JsonSlurper().parseText(requestData.body) as Map;
+            def json = requestData.body as Map;
+
             checkFields(parentTypeId, fragment.resourceType, json);
 
             def item = genericItemRepository.getItem(fragmentType.id, fragment.resourceId);
